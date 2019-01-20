@@ -1,0 +1,17 @@
+* Set up of esp8266 arduino on NixOS
+#+begin_src sh
+# Get a shell with all needed deps
+nix-shell --run fish -p arduino patchelf python
+
+# Install ESP8266 things in your home directory
+arduino --pref boardsmanager.additional.urls="http://arduino.esp8266.com/stable/package_esp8266com_index.json" --save-prefs
+arduino --install-boards esp8266:esp8266
+
+# Patchelf to be able to compile things
+for file in (find ~/.arduino15/ -type f | grep -e '\/bin\/' -e 'libexec' -e 'esptool')
+  patchelf --set-interpreter /nix/store/fivq0nbggp4y8mhy3ixprqd7qyn1hy2j-glibc-2.27/lib64/ld-linux-x86-64.so.2 $file
+end
+
+# Run arduino studio in exwm
+env _JAVA_AWT_WM_NONREPARENTING=1 arduino
+#+end_src
