@@ -44,6 +44,33 @@ void loop() {
 (loop (red) (delay 250))
 #+end_src
 
+** Lisp webserver
+#+begin_src lisp
+(wifi-connect "SSID" "Password")
+
+(defun println (x s) (princ x s) (princ #\return s) (princ #\newline s))
+
+(wifi-server)
+
+(defun webpage ()
+  (loop
+   (with-client (s)
+                (loop
+                 (let ((line (read-line s)))
+                   (when (null line) (return))
+                   (print line)))
+                (println "HTTP/1.1 200 OK" s)
+                (println "Content-Type: text/html" s)
+                (println "Connection: close" s)
+                (println "" s)
+                (princ "<!DOCTYPE HTML><html><body><h1>ADC Value: " s)
+                (princ (digitalread 2) s)
+                (println "</h1></body></html>" s)
+                (println "" s))
+   (delay 5000)))
+
+(webpage)
+#+end_src
 * To flash things
  - Select the right board under the "Tools" menu.
  - Select the right port under the "Tools" menu.
