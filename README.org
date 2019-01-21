@@ -33,3 +33,7 @@ void loop() {
   delay(1000);               // wait for a second
 }
 #+end_src
+
+* To flash things
+ - Select the right board under the "Tools" menu.
+ - Select the right port under the "Tools" menu.
