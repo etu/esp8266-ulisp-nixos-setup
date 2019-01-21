@@ -1,7 +1,7 @@
 * Set up of esp8266 arduino on NixOS
 #+begin_src sh
 # Get a shell with all needed deps
-nix-shell --run fish -p arduino patchelf python
+nix-shell --run fish -p arduino patchelf python screen
 
 # Install ESP8266 things in your home directory
 arduino --pref boardsmanager.additional.urls="http://arduino.esp8266.com/stable/package_esp8266com_index.json" --save-prefs
@@ -14,6 +14,9 @@ end
 
 # Run arduino studio in exwm
 env _JAVA_AWT_WM_NONREPARENTING=1 arduino
+
+# Serial console
+screen /dev/ttyUSB0
 #+end_src
 
 * Code to test with
