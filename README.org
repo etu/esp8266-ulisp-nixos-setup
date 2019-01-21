@@ -34,6 +34,13 @@ void loop() {
 }
 #+end_src
 
+** Lisp to test with
+#+begin_src lisp
+(pinmode 2 t)
+(defun red () (digitalwrite 2 (not (digitalread 2))))
+(loop (red) (delay 250))
+#+end_src
+
 * To flash things
  - Select the right board under the "Tools" menu.
  - Select the right port under the "Tools" menu.
